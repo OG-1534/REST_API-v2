@@ -6,8 +6,18 @@ router.get('/', (req, res) => {
     res.send('POSTS')
 });
 
-router.post('/', (req,res) => {
-    console.log(req.body);
+router.post('/', async (req,res) => {
+    const Post = new post({
+        title: req.body.title,
+        description: req.body.description
+    });
+
+try {
+    const savedPost = await Post.save();
+    res.json(savedPost);
+} catch (err) {
+    res.json({ message: err });
+    }
 });
 
 
